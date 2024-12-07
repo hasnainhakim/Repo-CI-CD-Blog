@@ -32,7 +32,9 @@ jobs:
 
       # Docker Image Build
       - name: Build Docker Image
-        run: docker build -t $GITHUB_SHA .
+        run: |    
+          docker build -t $GITHUB_SHA .
+          docker tag actions-app:${{ github.sha}} ${{ secrets.ECR_REPOSITORY_URI}}:latest
 
       # Trivy Scan
       - name: Trivy Scan
