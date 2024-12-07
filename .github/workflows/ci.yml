@@ -33,8 +33,8 @@ jobs:
       # Docker Image Build
       - name: Build Docker Image
         run: |    
-          docker build -t $GITHUB_SHA .
-          docker tag actions-app:${{ github.sha}} ${{ secrets.ECR_REPOSITORY_URI}}:latest
+          docker build -t actions-app:${{ github.sha}} .
+          docker tag actions-app:${{ github.sha}} ${{ secrets.ECR_REPOSITORY_URI}}/actions-app:latest
 
       # Trivy Scan
       - name: Trivy Scan
@@ -56,7 +56,7 @@ jobs:
       # Push image to Amazon ECR
       - name: Push image to Amazon ECR
         run: |
-          docker push ${{ secrets.ECR_REPOSITORY_URI}}:latest
+          docker push ${{ secrets.ECR_REPOSITORY_URI}}/actions-app:latest
         env:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
