@@ -80,7 +80,8 @@ jobs:
 
       - name: Authenticate Kubernetes client
         run: |
-          aws eks get-token --cluster-name actions-eks-cluster | kubectl apply -f -
+         TOKEN=$(aws eks get-token --cluster-name actions-eks-cluster)
+         kubectl config set-credentials actions-eks-cluster --token=$TOKEN
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
